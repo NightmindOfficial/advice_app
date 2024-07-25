@@ -15,7 +15,7 @@ class AdvicerBloc extends Bloc<AdvicerEvent, AdvicerState> {
     on<AdviceRequestedEvent>((event, emit) async {
       emit(AdvicerLoadingState());
       final Either<Failure, AdviceEntity> adviceOrFailure =
-          await usecases.getFakeAdvice();
+          await usecases.getAdvice();
 
       emit(
         adviceOrFailure.fold(
