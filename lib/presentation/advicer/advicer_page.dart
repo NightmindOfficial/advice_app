@@ -10,7 +10,6 @@ class AdvicerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AdvicerBloc advicerBloc = AdvicerBloc();
     final ThemeData themeData = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +27,8 @@ class AdvicerPage extends StatelessWidget {
             Expanded(
                 child: Center(
               child: BlocBuilder<AdvicerBloc, AdvicerState>(
-                bloc: advicerBloc,
+                bloc: BlocProvider.of<AdvicerBloc>(context)
+                  ..add(AdviceRequestedEvent()),
                 builder: (context, adviceState) {
                   if (adviceState is AdvicerInitial) {
                     return Text(
@@ -50,14 +50,10 @@ class AdvicerPage extends StatelessWidget {
                 },
               ),
             )),
-            SizedBox(
+            const SizedBox(
               height: 200,
               child: Center(
-                child: CustomButton(
-                  onPressed: () {
-                    advicerBloc.add(AdviceRequestedEvent());
-                  },
-                ),
+                child: CustomButton(),
               ),
             )
           ],
