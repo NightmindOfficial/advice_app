@@ -29,23 +29,27 @@ class AdvicerPage extends StatelessWidget {
               child: BlocBuilder<AdvicerBloc, AdvicerState>(
                 bloc: BlocProvider.of<AdvicerBloc>(context),
                 builder: (context, adviceState) {
-                  if (adviceState is AdvicerInitial) {
+                  if (adviceState is AdvicerInitialState) {
                     return Text(
                       "Your Advice is waiting for you...",
                       style: themeData.textTheme.displayMedium,
                     );
-                  } else if (adviceState is AdvicerLoading) {
+                  } else if (adviceState is AdvicerLoadingState) {
                     return CircularProgressIndicator(
                       color: themeData.colorScheme.secondary,
                     );
-                  } else if (adviceState is AdvicerLoaded) {
+                  } else if (adviceState is AdvicerLoadedState) {
                     return AdviceField(
                       advice: adviceState.advice,
                     );
-                  } else if (adviceState is AdvicerError) {
-                    return const ErrorMessage();
+                  } else if (adviceState is AdvicerErrorState) {
+                    return ErrorMessage(
+                      message: adviceState.message,
+                    );
                   }
-                  return const ErrorMessage();
+                  return const ErrorMessage(
+                    message: "An unhandled Exception occurred.",
+                  );
                 },
               ),
             )),
