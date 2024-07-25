@@ -1,3 +1,5 @@
+import 'package:advice_app/domain/entities/advice_entity.dart';
+import 'package:advice_app/domain/usecases/advicer_usecases.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -5,16 +7,13 @@ part 'advicer_event.dart';
 part 'advicer_state.dart';
 
 class AdvicerBloc extends Bloc<AdvicerEvent, AdvicerState> {
-  AdvicerBloc() : super(AdvicerInitial()) {
-    ///Fake Network Request
-    Future sleep1() {
-      return Future.delayed(const Duration(seconds: 2), () => "1");
-    }
+  final AdvicerUsecases usecases = AdvicerUsecases();
 
+  AdvicerBloc() : super(AdvicerInitial()) {
     on<AdviceRequestedEvent>((event, emit) async {
       emit(AdvicerLoading());
-      await sleep1();
-      emit(AdvicerLoaded(advice: "Testing..."));
+      AdviceEntity adviceEntity = await usecases.getFakeAdvice();
+      emit(AdvicerLoaded(advice: adviceEntity.advice));
     });
   }
 }

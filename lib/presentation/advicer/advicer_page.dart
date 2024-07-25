@@ -27,8 +27,7 @@ class AdvicerPage extends StatelessWidget {
             Expanded(
                 child: Center(
               child: BlocBuilder<AdvicerBloc, AdvicerState>(
-                bloc: BlocProvider.of<AdvicerBloc>(context)
-                  ..add(AdviceRequestedEvent()),
+                bloc: BlocProvider.of<AdvicerBloc>(context),
                 builder: (context, adviceState) {
                   if (adviceState is AdvicerInitial) {
                     return Text(
