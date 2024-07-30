@@ -1,11 +1,12 @@
 import 'package:advice_app/domain/entities/advice_entity.dart';
 import 'package:advice_app/domain/failures/failures.dart';
 import 'package:advice_app/domain/repositories/advicer_repository.dart';
-import 'package:advice_app/infrastructure/repositories/advicer_repository_impl.dart';
 import 'package:dartz/dartz.dart';
 
 class AdvicerUsecases {
-  final AdvicerRepository advicerRepository = AdvicerRepositoryImpl();
+  final AdvicerRepository advicerRepository;
+
+  AdvicerUsecases({required this.advicerRepository});
 
   Future<Either<Failure, AdviceEntity>> getAdvice() async {
     //FUTURE Implement Business Logic, e.g. calculations, etc.

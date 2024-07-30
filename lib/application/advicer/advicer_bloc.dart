@@ -9,9 +9,9 @@ part 'advicer_event.dart';
 part 'advicer_state.dart';
 
 class AdvicerBloc extends Bloc<AdvicerEvent, AdvicerState> {
-  final AdvicerUsecases usecases = AdvicerUsecases();
+  final AdvicerUsecases usecases;
 
-  AdvicerBloc() : super(AdvicerInitialState()) {
+  AdvicerBloc({required this.usecases}) : super(AdvicerInitialState()) {
     on<AdviceRequestedEvent>((event, emit) async {
       emit(AdvicerLoadingState());
       final Either<Failure, AdviceEntity> adviceOrFailure =
