@@ -17,7 +17,7 @@ class AdvicerRepositoryImpl implements AdvicerRepository {
           await advicerRemoteDatasource.getRandomAdviceFromAPI();
       return Right(remoteAdvice);
     } catch (e) {
-      switch (e) {
+      switch (e.runtimeType) {
         case const (ServerException):
           return Left(ServerFailure());
         default:
