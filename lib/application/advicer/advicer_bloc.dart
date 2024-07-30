@@ -3,10 +3,15 @@ import 'package:advice_app/domain/failures/failures.dart';
 import 'package:advice_app/domain/usecases/advicer_usecases.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 part 'advicer_event.dart';
 part 'advicer_state.dart';
+
+const generalFailureMsg = "Whoops, something has gone wrong. Please try again.";
+const serverFailureMsg =
+    "Whoops, a Server / API error occurred. Please try again.";
 
 class AdvicerBloc extends Bloc<AdvicerEvent, AdvicerState> {
   final AdvicerUsecases usecases;
@@ -32,9 +37,9 @@ class AdvicerBloc extends Bloc<AdvicerEvent, AdvicerState> {
 String _mapFailureToMessage(Failure failure) {
   switch (failure.runtimeType) {
     case const (ServerFailure):
-      return "Whoops, a Server / API error occurred. Please try again.";
+      return serverFailureMsg;
     case const (GeneralFailure):
     default:
-      return "Whoops, something has gone wrong. Please try again.";
+      return generalFailureMsg;
   }
 }
