@@ -1,6 +1,7 @@
 import 'package:advice_app/domain/entities/advice_entity.dart';
+import 'package:equatable/equatable.dart';
 
-class AdviceModel extends AdviceEntity {
+class AdviceModel extends AdviceEntity with EquatableMixin {
   AdviceModel({required super.advice, required super.adviceID});
 
   factory AdviceModel.fromJson(Map<String, dynamic> json) {
@@ -9,4 +10,7 @@ class AdviceModel extends AdviceEntity {
       adviceID: json['id'],
     );
   }
+
+  @override
+  List<Object?> get props => [advice, adviceID];
 }

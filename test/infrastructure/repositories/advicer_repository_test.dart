@@ -38,7 +38,7 @@ void main() {
       final result = await advicerRepository.getAdviceFromAPI();
       // Assert
       verify(mockAdvicerRemoteDatasource.getRandomAdviceFromAPI());
-      expect(result, Right(tAdvice));
+      expect(result, Right(tAdviceModel));
       verifyNoMoreInteractions(mockAdvicerRemoteDatasource);
     });
 
