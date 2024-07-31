@@ -3,6 +3,8 @@ name: Unit Tests
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - '**.md'
   workflow_dispatch: # To manually run the workflow
 
 jobs:
