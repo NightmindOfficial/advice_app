@@ -50,4 +50,24 @@ class MockThemeLocalDatasource extends _i1.Mock
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),
       ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<bool> getUseSystemTheme() => (super.noSuchMethod(
+        Invocation.method(
+          #getUseSystemTheme,
+          [],
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+
+  @override
+  _i3.Future<bool> cacheUseSystemTheme({required bool? useSystemTheme}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #cacheUseSystemTheme,
+          [],
+          {#useSystemTheme: useSystemTheme},
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
 }

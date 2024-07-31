@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'theme_local_datasource_test.mocks.dart';
 
 const cachedThemeMode = "cached-theme-mode";
+const cachedUseSystemTheme = "cached-use-system-theme";
 
 @GenerateMocks([SharedPreferences])
 void main() {
@@ -60,6 +61,51 @@ void main() {
 
       // Assert
       verify(mockSharedPreferences.setBool(cachedThemeMode, tThemeData));
+    });
+  });
+
+  group("getUseSystemTheme", () {
+    const tThemeData = true;
+    test(
+        "Should return bool (systemTheme) if there is one in sharedPreferences",
+        () async {
+      // Arrange
+      when(mockSharedPreferences.getBool(any)).thenReturn(tThemeData);
+
+      // Act
+      final result = await themeLocalDatasource.getUseSystemTheme();
+
+      // Assert
+      verify(mockSharedPreferences.getBool(cachedUseSystemTheme));
+      expect(result, tThemeData);
+    });
+    test(
+        "Should return a CacheException if there is no themeData stored in sharedPreferences",
+        () {
+      // Arrange
+      when(mockSharedPreferences.getBool(any)).thenReturn(null);
+
+      // Act
+      final call = themeLocalDatasource.getUseSystemTheme;
+
+      // Assert
+      expect(() => call(), throwsA(const TypeMatcher<CacheException>()));
+    });
+  });
+
+  group("cacheUseSystemTheme", () {
+    const tThemeData = true;
+
+    test("Should call sharedPreferences to cache useSystemTheme", () {
+      // Arrange
+      when(mockSharedPreferences.setBool(any, any))
+          .thenAnswer((_) async => true);
+
+      // Act
+      themeLocalDatasource.cacheUseSystemTheme(useSystemTheme: tThemeData);
+
+      // Assert
+      verify(mockSharedPreferences.setBool(cachedUseSystemTheme, tThemeData));
     });
   });
 }

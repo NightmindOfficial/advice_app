@@ -69,15 +69,61 @@ void main() {
     });
   });
 
+  group("setUseSystemTheme", () {
+    const tMode = false;
+
+    test(
+        "Should set useSystemTheme to the parameter given in arguments and store this information",
+        () {
+      // Arrange
+      themeService.useSystemTheme = true;
+      when(mockThemeRepository.setUseSystemTheme(
+              useSystemTheme: anyNamed("useSystemTheme")))
+          .thenAnswer((_) async => true);
+
+      // Act
+      themeService.setUseSystemTheme(systemTheme: tMode);
+
+      // Assert
+      expect(themeService.useSystemTheme, tMode);
+      verify(mockThemeRepository.setUseSystemTheme(useSystemTheme: tMode));
+      expect(listenerCount, 1);
+    });
+  });
+
+  group("toggleUseSystemTheme", () {
+    const tMode = false;
+
+    test("Should toggle current useSystemtheme and store this information", () {
+      // Arrange
+      themeService.useSystemTheme = true;
+      when(mockThemeRepository.setUseSystemTheme(
+              useSystemTheme: anyNamed("useSystemTheme")))
+          .thenAnswer((_) async => true);
+
+      // Act
+      themeService.toggleTheme();
+
+      // Assert
+      expect(themeService.darkMode, tMode);
+      verify(mockThemeRepository.setThemeMode(mode: tMode));
+      expect(listenerCount, 1);
+    });
+  });
+
   group("init", () {
     const tMode = false;
 
     test(
-        "Should get a theme mode from local data source, use it and notify listeners",
+        "Should get theme modes from local data source, use it and notify listeners",
         () async {
       // Arrange
       themeService.darkMode = true;
+      themeService.useSystemTheme = true;
       when(mockThemeRepository.getThemeMode())
+          .thenAnswer((_) async => const Right(tMode));
+
+      when(mockThemeRepository.getUseSystemTheme())
           .thenAnswer((_) async => const Right(tMode));
 
       // Act
@@ -85,16 +131,20 @@ void main() {
 
       // Assert
       expect(themeService.darkMode, tMode);
+      expect(themeService.useSystemTheme, tMode);
       verify(mockThemeRepository.getThemeMode());
-      expect(listenerCount, 1);
+      verify(mockThemeRepository.getUseSystemTheme());
+      expect(listenerCount, 2);
     });
 
     test(
-        "Should use initial fallback theme (dark) if no theme from local source (shared prefs) is returned, and notify listeners",
+        "Should use initial fallback themes (dark, no system theme) if no themes from local source (shared prefs) is returned, and notify listeners",
         () async {
       // Arrange
-      themeService.darkMode = true;
       when(mockThemeRepository.getThemeMode())
+          .thenAnswer((_) async => Left(CacheFailure()));
+
+      when(mockThemeRepository.getUseSystemTheme())
           .thenAnswer((_) async => Left(CacheFailure()));
 
       // Act
@@ -102,8 +152,10 @@ void main() {
 
       // Assert
       expect(themeService.darkMode, true);
+      expect(themeService.useSystemTheme, false);
       verify(mockThemeRepository.getThemeMode());
-      expect(listenerCount, 1);
+      verify(mockThemeRepository.getUseSystemTheme());
+      expect(listenerCount, 2);
     });
   });
 }

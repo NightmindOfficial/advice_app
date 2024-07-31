@@ -66,4 +66,53 @@ void main() {
       verifyNoMoreInteractions(mockThemeLocalDatasource);
     });
   });
+
+  group("setUseSystemTheme", () {
+    const tThemeMode = true;
+
+    test("Should call function to cache useSystemtheme in local datasource",
+        () {
+      // Arrange
+      when(mockThemeLocalDatasource.cacheUseSystemTheme(
+              useSystemTheme: anyNamed("useSystemTheme")))
+          .thenAnswer((_) async => true);
+      // Act
+      themeRepository.setUseSystemTheme(useSystemTheme: tThemeMode);
+
+      // Assert
+      verify(mockThemeLocalDatasource.cacheUseSystemTheme(
+          useSystemTheme: tThemeMode));
+    });
+  });
+  group("getUseSystemTheme", () {
+    const tThemeMode = true;
+
+    test("Should return systemThemeMode if cached data is available", () async {
+      // Arrange
+      when(mockThemeLocalDatasource.getUseSystemTheme())
+          .thenAnswer((_) async => tThemeMode);
+
+      // Act
+      final result = await themeRepository.getUseSystemTheme();
+
+      // Assert
+      expect(result, const Right(tThemeMode));
+      verify(mockThemeLocalDatasource.getUseSystemTheme());
+      verifyNoMoreInteractions(mockThemeLocalDatasource);
+    });
+    test("Should return CacheFailure if cached data is not available",
+        () async {
+      // Arrange
+      when(mockThemeLocalDatasource.getUseSystemTheme())
+          .thenThrow(CacheException());
+
+      // Act
+      final result = await themeRepository.getUseSystemTheme();
+
+      // Assert
+      expect(result, Left(CacheFailure()));
+      verify(mockThemeLocalDatasource.getUseSystemTheme());
+      verifyNoMoreInteractions(mockThemeLocalDatasource);
+    });
+  });
 }

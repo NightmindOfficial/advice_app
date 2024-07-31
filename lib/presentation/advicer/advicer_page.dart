@@ -23,8 +23,18 @@ class AdvicerPage extends StatelessWidget {
         actions: [
           Switch(
             value: Provider.of<ThemeService>(context).darkMode,
+            onChanged: Provider.of<ThemeService>(context).useSystemTheme
+                ? null
+                : (_) {
+                    Provider.of<ThemeService>(context, listen: false)
+                        .toggleTheme();
+                  },
+          ),
+          Switch(
+            value: Provider.of<ThemeService>(context).useSystemTheme,
             onChanged: (_) {
-              Provider.of<ThemeService>(context, listen: false).toggleTheme();
+              Provider.of<ThemeService>(context, listen: false)
+                  .toggleUseSystemTheme();
             },
           ),
         ],

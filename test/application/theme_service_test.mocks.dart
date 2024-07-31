@@ -68,4 +68,33 @@ class MockThemeRepository extends _i1.Mock implements _i3.ThemeRepository {
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
       ) as _i4.Future<void>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, bool>> getUseSystemTheme() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getUseSystemTheme,
+          [],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, bool>>.value(
+            _FakeEither_0<_i5.Failure, bool>(
+          this,
+          Invocation.method(
+            #getUseSystemTheme,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, bool>>);
+
+  @override
+  _i4.Future<void> setUseSystemTheme({required bool? useSystemTheme}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setUseSystemTheme,
+          [],
+          {#useSystemTheme: useSystemTheme},
+        ),
+        returnValue: _i4.Future<void>.value(),
+        returnValueForMissingStub: _i4.Future<void>.value(),
+      ) as _i4.Future<void>);
 }
