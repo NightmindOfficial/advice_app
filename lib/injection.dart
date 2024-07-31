@@ -1,9 +1,11 @@
 import 'package:advice_app/application/advicer/advicer_bloc.dart';
 import 'package:advice_app/domain/repositories/advicer_repository.dart';
+import 'package:advice_app/domain/repositories/theme_repository.dart';
 import 'package:advice_app/domain/usecases/advicer_usecases.dart';
 import 'package:advice_app/infrastructure/datasources/advicer_remote_datasource.dart';
 import 'package:advice_app/infrastructure/datasources/theme_local_datasource.dart';
 import 'package:advice_app/infrastructure/repositories/advicer_repository_impl.dart';
+import 'package:advice_app/infrastructure/repositories/theme_repository_impl.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:http/http.dart' as http;
@@ -21,6 +23,9 @@ Future<void> init() async {
   //! Repository
   sl.registerLazySingleton<AdvicerRepository>(
       () => AdvicerRepositoryImpl(advicerRemoteDatasource: sl()));
+
+  sl.registerLazySingleton<ThemeRepository>(
+      () => ThemeRepositoryImpl(themeLocalDatasource: sl()));
 
   //! Datasources
   sl.registerLazySingleton<AdvicerRemoteDatasource>(
