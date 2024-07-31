@@ -1,16 +1,5 @@
 # advice_app
 
-A new Flutter project.
+[![Unit Tests](https://github.com/NightmindOfficial/advice_app/actions/workflows/unit-testing.yaml/badge.svg?branch=master)](https://github.com/NightmindOfficial/advice_app/actions/workflows/unit-testing.yaml)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+A Flutter project I created along a video course on Clean Architecture. In this project, I learned how to maintain a clean working architecture in Flutter as well as the basics of Unit & Widget Testing as well as TDD (Test-Driven Development).
