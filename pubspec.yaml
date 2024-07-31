@@ -41,6 +41,7 @@ dependencies:
   http: ^1.2.2
   get_it: ^7.7.0
   equatable: ^2.0.5
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
   build_runner: ^2.4.11
